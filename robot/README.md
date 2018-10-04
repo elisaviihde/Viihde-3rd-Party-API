@@ -1,4 +1,4 @@
-# api.elisaviihde.fi Robot Example
+# Robot Example
 ## What the example is for
 The provided cases are meant to show how the Viihde APIs can be called.
 Especially the user authentication might be a tricky proposition to start with no reference.
