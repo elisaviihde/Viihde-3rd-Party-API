@@ -1,0 +1,116 @@
+Getting api-key:
+    Contact xxx@elisa.fi to get your 3rd party token
+
+    Base url:
+        https://api-viihde-gateway.dc1.elisa.fi
+
+    Getting access_code:
+        POST /auth/authorize/access-code
+            Content-Type: application/json
+            client_id=external
+            client_secret=nZhkFGz8Zd8w
+            response_type=code
+
+        Example:
+            curl -v -XPOST -H "apikey: 6ZCPNYUVr0CcwqAZa6G97Lkmpg3OThfi" -H "Content-Type: application/json" "https://api-viihde-gateway.dc1.elisa.fi/auth/authorize/access-code?response_type=code"  --data '{"response_type":"code", "client_id": "external", "client_secret": "nZhkFGz8Zd8w"}'
+
+    Getting a token:
+        POST /auth/authorize/access-token
+            Content-Type: application/x-www-form-urlencoded
+            grant_type=authorization_code
+            code=<get_from_access-code_request>
+            username=<your_username>
+            password=<your_password>
+            client_id=external
+            client_secret=nZhkFGz8Zd8w
+
+        Example:
+            curl -v -XPOST -H "apikey: 6ZCPNYUVr0CcwqAZa6G97Lkmpg3OThfi" -H "Content-Type: application/x-www-form-urlencoded" https://api-viihde-gateway.dc1.elisa.fi/auth/authorize/access-token --data "grant_type=authorization_code&code=<code_request>&username=<your_username>&password=<your_password>&client_id=external&client_secret=nZhkFGz8Zd8w"
+
+    Refresh token: (token is valid for 32h after which it needs to be refreshed. Refresh token is valid for 30 days after which relogin is needed)
+        POST /auth/authorize/access-token
+            Content-Type: application/x-www-form-urlencoded
+            grant_type=refresh_token
+            refresh_token=<get_from_authorization_code_request>
+            client_id=external
+            client_secret=nZhkFGz8Zd8w
+
+    Always use in header:
+        -H "Authorization: Bearer <your_access_token>"
+
+
+    Recordings
+        Append every request with &platform=external&appVersion=1.0
+        Listing:
+            GET /rest/npvr/recordings?v=2.1
+        Program info:
+            GET /rest/npvr/recordings/info/:programId?v=2.1
+        Recording url:
+            GET /rest/npvr/recordings/url/:programId?v=2.1
+        Add single recording rule:
+            PUT /rest/npvr/recordings?v=0.1
+                programId=
+                folderId=<optional_for_root_folder>
+        Wildcard recording rule:
+            PUT /rest/npvr/recordings/wildcard?v=2
+                wildcardPattern=
+                channelId=
+                folderId=<optional_for_root_folder>
+                newFolderName=<if_new_folder_desired>
+                pin=<if_pin_needed_for_folder>
+        Move recording
+            PUT /rest/npvr/recordings/move?v=2
+                programId=<comma_separated_for_multi>
+                folderId=
+        Delete recording
+            DELETE /rest/npvr/recordings/id/:recordingId?v=2
+                recordingId=
+        Folder hierarchy
+            GET /rest/npvr/folders?v=2.1
+        Add folder
+            PUT /rest/npvr/folders?v=0.1
+                name=
+                parentFolderId=
+                pin=
+        Delete folder
+            DELETE /rest/npvr/folders/:folderId?v=2
+                folderId=
+                contentsOnly=
+
+    EPG
+        Append every request with &platform=external&appVersion=1.0
+        To get metadata for programs append schedule and program queries with '&includeFields=programId,channel,suggestedFolderNames,suggestedWildcardRules,recordable,id,name,status,startTime,endTime,startTimeUTC,lengthMinutes,isPopular,shortDescription,thumbnailUrl,thumbnails,genres,showtype,images,series,credits,starRating,contentRating,ageLimit'
+        Get channels
+            GET /rest/epg/channels
+        Get schedule
+            GET /rest/epg/schedule/:channelId
+        Get program
+            GET /rest/epg/programs/:programIds
+
+    Vods
+        Get favorites
+            GET /rest/vod/favorites?v=1
+        Get newest
+            GET /rest/vod/newest?v=1
+        Popular vods
+            GET /rest/vod/popular?v=1
+        Get vod url
+            GET /rest/vod/url/:title_id?v=1
+        Add favorite vod
+            PUT /rest/vod/favorites/:title_id?v=1
+        Delete favorite
+            DELETE /rest/vod/favorites/:title_id?v=1
+        Vod categories
+            GET /rest//vod/categories?v=1
+                includeMetadata=true
+                subtree=
+        Vod categories titles
+            GET /rest/vod/categories/:category_id/titles?v=1
+            includeMetadata=true
+            category_id=
+            sortBy=year,duration,price,title,episode,season,created
+            sortOrder=asc/desc
+
+    Account
+        Account information
+            GET /rest/myaccount/devices,services,netpvr,authentication?v=2
