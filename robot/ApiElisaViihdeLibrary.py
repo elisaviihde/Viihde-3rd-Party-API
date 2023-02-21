@@ -8,7 +8,7 @@ class ApiElisaViihdeLibrary(object):
     base_url_api_viihde               = 'https://api-viihde-gateway.dc1.elisa.fi'
 
     external_client_id                = 'external'
-    external_client_secret            = 'nZhkFGz8Zd8w'
+    external_client_secret            = 'externalClientSecret'
     external_api_key                  = 'GetThisFromElisa'
 
     metadata_query_param              = 'programId,channel,suggestedFolderNames,suggestedWildcardRules,recordable,id,name,status,startTime,endTime,startTimeUTC,lengthMinutes,isPopular,shortDescription,thumbnailUrl,thumbnails,genres,showtype,images,series,credits,starRating,contentRating,ageLimit'
