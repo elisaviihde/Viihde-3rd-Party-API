@@ -8,11 +8,11 @@ Getting api-key:
         POST /auth/authorize/access-code
             Content-Type: application/json
             client_id=external
-            client_secret=nZhkFGz8Zd8w
+            client_secret=CLIENT_SECRET
             response_type=code
 
         Example:
-            curl -v -XPOST -H "apikey: 6ZCPNYUVr0CcwqAZa6G97Lkmpg3OThfi" -H "Content-Type: application/json" "https://api-viihde-gateway.dc1.elisa.fi/auth/authorize/access-code?response_type=code"  --data '{"response_type":"code", "client_id": "external", "client_secret": "nZhkFGz8Zd8w"}'
+            curl -v -XPOST -H "apikey: API_KEY_VALUE" -H "Content-Type: application/json" "https://api-viihde-gateway.dc1.elisa.fi/auth/authorize/access-code?response_type=code"  --data '{"response_type":"code", "client_id": "external", "client_secret": "CLIENT_SECRET"}'
 
     Getting a token:
         POST /auth/authorize/access-token
@@ -22,10 +22,10 @@ Getting api-key:
             username=<your_username>
             password=<your_password>
             client_id=external
-            client_secret=nZhkFGz8Zd8w
+            client_secret=CLIENT_SECRET
 
         Example:
-            curl -v -XPOST -H "apikey: 6ZCPNYUVr0CcwqAZa6G97Lkmpg3OThfi" -H "Content-Type: application/x-www-form-urlencoded" https://api-viihde-gateway.dc1.elisa.fi/auth/authorize/access-token --data "grant_type=authorization_code&code=<code_request>&username=<your_username>&password=<your_password>&client_id=external&client_secret=nZhkFGz8Zd8w"
+            curl -v -XPOST -H "apikey: 6ZCPNYUVr0CcwqAZa6G97Lkmpg3OThfi" -H "Content-Type: application/x-www-form-urlencoded" https://api-viihde-gateway.dc1.elisa.fi/auth/authorize/access-token --data "grant_type=authorization_code&code=<code_request>&username=<your_username>&password=<your_password>&client_id=external&client_secret=CLIENT_SECRET"
 
     Refresh token: (token is valid for 32h after which it needs to be refreshed. Refresh token is valid for 30 days after which relogin is needed)
         POST /auth/authorize/access-token
@@ -33,7 +33,7 @@ Getting api-key:
             grant_type=refresh_token
             refresh_token=<get_from_authorization_code_request>
             client_id=external
-            client_secret=nZhkFGz8Zd8w
+            client_secret=CLIENT_SECRET
 
     Always use in header:
         -H "Authorization: Bearer <your_access_token>"
